@@ -1,0 +1,15 @@
+[Unit]
+Description=Odoo 19
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=odoo
+Group=odoo
+ExecStart=/opt/odoo/venvs/odoo19/bin/python3 /opt/odoo/src/odoo19/odoo-bin -c /opt/odoo/conf/odoo19.conf
+Restart=always
+RestartSec=3
+LimitNOFILE=100000
+
+[Install]
+WantedBy=multi-user.target
