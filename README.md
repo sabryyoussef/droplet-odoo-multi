@@ -35,6 +35,9 @@ chmod +x scripts/*.sh
 ./scripts/collect_snapshot.sh
 ```
 
+## Planned expansions
+- n8n install plan (without dashboard): `runbooks/RUNBOOK_N8N_INSTALL_NO_DASHBOARD.md`
+
 ## Script permissions
 ```bash
 chmod +x scripts/status.sh \

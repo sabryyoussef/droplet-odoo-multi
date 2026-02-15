@@ -7,6 +7,7 @@
 - Security baseline/backlog: `docs/04_SECURITY.md`
 - Backup & restore: `docs/05_BACKUP_RESTORE.md`
 - Troubleshooting: `docs/06_TROUBLESHOOTING.md`
+- n8n install (no dashboard): `runbooks/RUNBOOK_N8N_INSTALL_NO_DASHBOARD.md`
 
 ## Endpoints
 - Odoo 18: `https://odoo18.freezonermirror.online`
