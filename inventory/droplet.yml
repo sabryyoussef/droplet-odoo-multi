@@ -1,0 +1,69 @@
+droplet:
+  provider: digitalocean
+  role: odoo-multi-instance
+  updated_on: 2026-02-15
+
+domains:
+  odoo18:
+    fqdn: odoo18.freezonermirror.online
+    protocol: https
+  odoo19:
+    fqdn: odoo19.freezonermirror.online
+    protocol: https
+
+network:
+  public_ingress_ports:
+    - 22
+    - 80
+    - 443
+  internal_odoo_ports:
+    odoo18_http: 8018
+    odoo18_longpoll_websocket: 8072
+    odoo19_http: 8019
+    odoo19_longpoll_websocket: 8073
+
+services:
+  systemd_units:
+    - name: odoo18
+      unit_file: /etc/systemd/system/odoo18.service
+      odoo_conf: /opt/odoo/conf/odoo18.conf
+      http_port: 8018
+      longpoll_websocket_port: 8072
+    - name: odoo19
+      unit_file: /etc/systemd/system/odoo19.service
+      odoo_conf: /opt/odoo/conf/odoo19.conf
+      http_port: 8019
+      longpoll_websocket_port: 8073
+    - name: nginx
+      unit_file: /lib/systemd/system/nginx.service
+
+paths:
+  nginx:
+    sites_available: /etc/nginx/sites-available
+    conf_d: /etc/nginx/conf.d
+  odoo:
+    conf_dir: /opt/odoo/conf
+    logs_dir: /opt/odoo/logs
+  logrotate:
+    odoo_policy: /etc/logrotate.d/odoo
+  certbot:
+    letsencrypt_dir: /etc/letsencrypt
+  sysctl:
+    runtime_cmd: sysctl -a
+
+sysctl_baseline:
+  vm.swappiness: 10
+  fs.file-max: 2097152
+  net.core.somaxconn: 4096
+
+security:
+  scanner_path_blocks:
+    - .git
+    - .env
+    - swagger
+    - api-docs
+    - server-status
+  auth_rate_limit_paths:
+    - /web/login
+    - /web/session/authenticate
+  certbot_dry_run_verified: true
